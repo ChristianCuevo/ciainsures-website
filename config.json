@@ -47,10 +47,10 @@
       ]
     },
     {
-      "id": "evergreen",
-      "name": "Evergreen",
-      "desc": "Calm: deep green and mint, soft rounded shapes",
-      "swatch": "linear-gradient(135deg,#d4f1e3 0 45%,#14795c 45%)",
+      "id": "bayside",
+      "name": "Bayside",
+      "desc": "Friendly: blue with a mint accent, soft rounded shapes",
+      "swatch": "linear-gradient(135deg,#1d5fbf 0 55%,#2ec4a0 55%)",
       "fonts": [
         "Outfit:wght@600;700",
         "Nunito+Sans:wght@400;600;700"
@@ -59,8 +59,8 @@
     {
       "id": "keystone",
       "name": "Keystone",
-      "desc": "Premium: charcoal slate with the logo's gold",
-      "swatch": "linear-gradient(135deg,#1b232c 0 55%,#f6be00 55%)",
+      "desc": "Premium: navy and royal blue with the logo's gold",
+      "swatch": "linear-gradient(135deg,#0b2447 0 55%,#f6be00 55%)",
       "fonts": [
         "Montserrat:wght@600;700;800",
         "Inter:wght@400;500;600"

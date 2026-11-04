@@ -56,47 +56,52 @@ html[data-look="meridian"]{
 [data-look="meridian"] .chip{border-radius:2px}
 [data-look="meridian"] .quote{border-radius:2px;border-left:3px solid #2f80ed}
 
-/* ---------- 3. EVERGREEN: deep green & mint, calm and trustworthy ---------- */
-html[data-look="evergreen"]{
-  --navy:#0d3b2e; --navy2:#11533f; --blue:#14795c; --gold:#14795c; --gold2:#0f6249; --on-accent:#fff; --hl:#14795c;
-  --ink:#10241d; --muted:#50655c; --line:#dce8e2; --tint:#f1f8f4;
+/* ---------- 3. BAYSIDE: blue main color with a mint / sea-green accent, soft rounded shapes ---------- */
+html[data-look="bayside"]{
+  --navy:#0b2a4a; --navy2:#123d6b; --blue:#1d5fbf; --gold:#1d5fbf; --gold2:#174ea0; --on-accent:#fff; --hl:#1d5fbf;
+  --mint:#2ec4a0; --mint-soft:#c8f1e4;
+  --ink:#0f2036; --muted:#4f6178; --line:#dde7f0; --tint:#f2f8fb;
   --head:"Outfit",system-ui,sans-serif; --body:"Nunito Sans",system-ui,sans-serif; --head-w:700;
-  --radius:16px; --btn-r:999px; --shadow:0 22px 44px -24px rgba(13,59,46,.42);
-  --hero-bg:radial-gradient(900px 520px at 85% 0%,#d4f1e3 0%,transparent 60%),linear-gradient(180deg,#f6fbf8,#eef7f2);
-  --hero-ink:#0d3b2e; --hero-muted:#46605a; --ghost:#b9d6c9; --ghost-ink:#0d3b2e;
-  --cover-bg:linear-gradient(135deg,#0d3b2e 0%,#14795c 100%);
-  --cta-bg:linear-gradient(120deg,#14795c,#0d3b2e); --footer-bg:#0b3127; --quote-bg:#0d3b2e;
+  --radius:16px; --btn-r:999px; --shadow:0 22px 44px -24px rgba(11,42,74,.42);
+  --hero-bg:radial-gradient(760px 460px at 88% 0%,#d3f3e9 0%,transparent 60%),radial-gradient(800px 520px at 10% 100%,#dde9fb 0%,transparent 60%),linear-gradient(180deg,#f7fbfd,#eef5fa);
+  --hero-ink:#0b2a4a; --hero-muted:#4a5f78; --ghost:#bccde3; --ghost-ink:#0b2a4a;
+  --cover-bg:linear-gradient(135deg,#0b2a4a 0%,#1d5fbf 100%);
+  --cta-bg:linear-gradient(120deg,#1d5fbf,#0b2a4a); --footer-bg:#0a2440; --quote-bg:#0b2a4a;
 }
-[data-look="evergreen"] .topbar{background:#0d3b2e}
-[data-look="evergreen"] .hero h1 span{color:#0d3b2e;background:linear-gradient(transparent 60%,#bfeacf 60%);display:inline;-webkit-box-decoration-break:clone;box-decoration-break:clone}
-[data-look="evergreen"] .hero h1 span::before{content:"";display:block}
-[data-look="evergreen"] .hero__art img{background:#fff;border-radius:28px 28px 28px 96px;padding:20px;box-shadow:var(--shadow)}
-[data-look="evergreen"] .eyebrow::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#2fbf8a;margin-right:.6em;vertical-align:middle}
-[data-look="evergreen"] .trust{background:#f1f8f4}
-[data-look="evergreen"] .trust__in>div{border-left:0;background:#fff;border-radius:14px;padding:1rem 1.1rem;border:1px solid #dce8e2}
-[data-look="evergreen"] .tile,[data-look="evergreen"] .pcard{border-color:#dce8e2}
-[data-look="evergreen"] .line{border-top-color:#2fbf8a}
-[data-look="evergreen"] .sec--tint{background:#f1f8f4}
-[data-look="evergreen"] .chip{background:#e2f4ea;color:#11533f}
-[data-look="evergreen"] .quote strong{color:#8fe0b8}
-[data-look="evergreen"] .ctaband .btn--gold{background:#fff;color:#0d3b2e}
+[data-look="bayside"] .topbar{background:#0b2a4a}
+[data-look="bayside"] .hero h1 span{color:#1d5fbf;background:linear-gradient(transparent 62%,var(--mint-soft) 62%);display:inline;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+[data-look="bayside"] .hero h1 span::before{content:"";display:block}
+[data-look="bayside"] .hero__art img{background:#fff;border-radius:28px 28px 28px 96px;padding:20px;box-shadow:var(--shadow)}
+[data-look="bayside"] .eyebrow::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mint);margin-right:.6em;vertical-align:middle}
+[data-look="bayside"] .trust{background:#f2f8fb}
+[data-look="bayside"] .trust__in>div{border:1px solid #dde7f0;border-left:4px solid var(--mint);background:#fff;border-radius:14px;padding:1rem 1.1rem}
+[data-look="bayside"] .tile,[data-look="bayside"] .pcard{border-color:#dde7f0}
+[data-look="bayside"] .tile:hover,[data-look="bayside"] .pcard:hover{border-color:var(--mint)}
+[data-look="bayside"] .line{border-top-color:var(--mint)}
+[data-look="bayside"] .sec--tint{background:#f2f8fb}
+[data-look="bayside"] .chip{background:#e3f7f0;color:#0f6b56}
+[data-look="bayside"] .tile em{color:#0f8c6e}
+[data-look="bayside"] .quote strong{color:#8fe6cc}
+[data-look="bayside"] .sec--navy .eyebrow{color:#8fe6cc}
+[data-look="bayside"] .answer{border-left-color:var(--mint)}
+[data-look="bayside"] .ctaband .btn--gold{background:#fff;color:#0b2a4a}
 
-/* ---------- 4. KEYSTONE: charcoal slate with the CIA logo's gold ---------- */
+/* ---------- 4. KEYSTONE: navy & royal blue main color with the CIA logo's gold accent ---------- */
 html[data-look="keystone"]{
-  --navy:#1b232c; --navy2:#28323d; --blue:#2f5d7c; --gold:#f6be00; --gold2:#ffcf33; --on-accent:#1b232c; --hl:#f6be00;
-  --ink:#171d24; --muted:#58636e; --line:#e1e4e8; --tint:#f5f6f7;
+  --navy:#0b2447; --navy2:#123a6b; --blue:#1d4f91; --gold:#f6be00; --gold2:#ffcf33; --on-accent:#0b2447; --hl:#f6be00;
+  --ink:#111c2b; --muted:#55657a; --line:#e0e6ee; --tint:#f4f7fb;
   --head:"Montserrat",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif; --head-w:800;
-  --radius:10px; --btn-r:10px; --shadow:0 22px 44px -24px rgba(23,29,36,.5);
-  --hero-bg:radial-gradient(700px 420px at 90% 10%,rgba(246,190,0,.16),transparent 60%),linear-gradient(160deg,#1b232c,#2a3440);
-  --hero-ink:#fff; --hero-muted:#c3ccd6;
-  --cover-bg:linear-gradient(160deg,#1b232c,#2b3a48);
-  --cta-bg:#1b232c; --footer-bg:#12181f; --quote-bg:#1b232c;
+  --radius:10px; --btn-r:10px; --shadow:0 22px 44px -24px rgba(11,36,71,.5);
+  --hero-bg:radial-gradient(700px 420px at 90% 10%,rgba(246,190,0,.14),transparent 60%),linear-gradient(160deg,#0b2447,#16407a);
+  --hero-ink:#fff; --hero-muted:#c6d4e6;
+  --cover-bg:linear-gradient(160deg,#0b2447,#1b4b8a);
+  --cta-bg:linear-gradient(120deg,#16407a,#0b2447); --footer-bg:#081a33; --quote-bg:#0b2447;
 }
-[data-look="keystone"] .topbar{background:#12181f}
+[data-look="keystone"] .topbar{background:#081a33}
 [data-look="keystone"] .header{border-bottom:2px solid #f6be00}
-[data-look="keystone"] .trust{background:#232c36;border:0}
+[data-look="keystone"] .trust{background:#0f2d57;border:0}
 [data-look="keystone"] .trust strong{color:#fff}
-[data-look="keystone"] .trust span{color:#c3ccd6}
+[data-look="keystone"] .trust span{color:#c6d4e6}
 [data-look="keystone"] .trust__in>div{border-left-color:#f6be00}
 [data-look="keystone"] .sechead h2::after{content:"";display:block;width:56px;height:4px;background:#f6be00;border-radius:2px;margin-top:.8rem}
 [data-look="keystone"] .tile:hover,[data-look="keystone"] .pcard:hover,[data-look="keystone"] .line:hover{border-color:#f6be00}
