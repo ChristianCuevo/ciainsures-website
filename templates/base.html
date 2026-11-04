@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ page.seo_title or page.title }}</title>
 {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
-{% if noindex %}<meta name="robots" content="noindex, nofollow">{% else %}<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">{% endif %}
+{% if noindex or force_noindex %}<meta name="robots" content="noindex, nofollow">{% else %}<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">{% endif %}
 {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
 <meta name="theme-color" content="#00212d">
 <link rel="icon" href="{{ cfg.icon }}" sizes="any">

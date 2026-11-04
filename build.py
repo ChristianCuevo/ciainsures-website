@@ -179,7 +179,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=str(ROOT / "dist"))
     ap.add_argument("--base-url", default=None)
+    ap.add_argument("--base-path", default="", help="serve from a sub-folder, e.g. /ciainsures-website (GitHub Pages preview)")
+    ap.add_argument("--noindex", action="store_true", help="preview build: tell search engines not to index it")
     args = ap.parse_args()
+    base_path = args.base_path.rstrip("/")
 
     cfg = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))
     if args.base_url:
@@ -229,7 +232,10 @@ def main():
         if url.endswith(".html"):
             dest = out / url.lstrip("/")
         dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(optimize_images(markup, static), encoding="utf-8")
+        markup = optimize_images(markup, static)
+        if base_path:  # prefix site-relative links so the site works from a sub-folder
+            markup = re.sub(r'\b(href|src|poster|action)="/(?!/)', rf'\1="{base_path}/', markup)
+        dest.write_text(markup, encoding="utf-8")
 
     def crumbs_for(url, title):
         cr = [{"label": "Home", "url": "/"}]
@@ -244,7 +250,7 @@ def main():
         return cr
 
     common = dict(cfg=cfg, base=base, asset_v=asset_v, year=datetime.now().year, nav=cfg["nav"],
-                  categories=categories, latest=posts[:3])
+                  categories=categories, latest=posts[:3], force_noindex=args.noindex)
 
     def render(tpl, **ctx):
         return env.get_template(tpl).render(**common, **ctx)
@@ -359,8 +365,11 @@ def main():
                                      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                                      + "\n".join(rows) + "\n</urlset>\n", encoding="utf-8")
 
-    # ---- robots.txt (search + AI answer engines explicitly welcome)
-    (out / "robots.txt").write_text(
+    # ---- robots.txt (search + AI answer engines explicitly welcome; preview builds block everything)
+    if args.noindex:
+        (out / "robots.txt").write_text("User-agent: *\nDisallow: /\n", encoding="utf-8")
+    else:
+        (out / "robots.txt").write_text(
         "User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /feedback/\nDisallow: /thank-you/\n\n"
         "# AI answer engines are welcome to read and cite our public content\n"
         + "".join(f"User-agent: {b}\nAllow: /\nDisallow: /api/\nDisallow: /feedback/\n\n"
