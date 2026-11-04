@@ -75,3 +75,8 @@ The domain currently points to WordPress.com. To switch:
 2. Once DNS has updated, on the server run:
    `certbot --nginx -d ciainsures.com -d www.ciainsures.com --redirect -m contactus@ciainsures.com --agree-tos -n`
 3. Submit `https://ciainsures.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
+
+## Design
+
+`design/homepage-directions.html` holds the four homepage directions (Harbor, Ledger, Signal, Coastline) for the HubSpot homepage.
+Open it in a browser to switch directions and preview desktop/phone sizes.
