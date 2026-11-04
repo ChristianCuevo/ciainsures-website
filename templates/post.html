@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block og_type %}article{% endblock %}
+{% block head %}
+{% if page.published %}<meta property="article:published_time" content="{{ page.published }}">{% endif %}
+{% if page.modified %}<meta property="article:modified_time" content="{{ page.modified }}">{% endif %}
+{% endblock %}
+{% block body_class %}t-post{% endblock %}
+{% block main %}
+{% include "_crumbs.html" %}
+<header class="posthead wrap narrow">
+  {% if page.cats %}<p class="chips">{% for c in page.cats %}<a class="chip" href="{{ c.url }}">{{ c.name }}</a>{% endfor %}</p>{% endif %}
+  {% if not page.content_has_h1 %}<h1>{{ page.title }}</h1>{% endif %}
+  <p class="meta">
+    By <a href="/about-central-insurance-agency/">{{ cfg.name }}</a>
+    {% if page.date %} · <time datetime="{{ page.published }}">{{ page.date|date }}</time>{% endif %}
+    · {{ page.minutes }} min read
+  </p>
+</header>
+{% if page.image and page.image not in page.body %}
+<figure class="wrap narrow postimg"><img src="{{ page.image|img }}" alt="{{ page.title }}" fetchpriority="high" decoding="async"></figure>
+{% endif %}
+<article class="wrap narrow content prose">
+{{ page.body|safe }}
+</article>
+<aside class="wrap narrow authorbox">
+  <img src="{{ cfg.icon|img }}" alt="" width="56" height="56" loading="lazy">
+  <div>
+    <strong>{{ cfg.name }}</strong>
+    <p>A nationwide commercial insurance broker for security, alarm, fire suppression, contractor, janitorial and home healthcare businesses. <a href="/contact/">Talk to a specialist</a>.</p>
+  </div>
+</aside>
+{% if related %}
+<section class="wrap related">
+  <h2>Related insights</h2>
+  <div class="cards3">
+    {% for q in related %}{% include "_postcard.html" %}{% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

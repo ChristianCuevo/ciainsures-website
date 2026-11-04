@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body_class %}t-listing{% endblock %}
+{% block main %}
+{% include "_crumbs.html" %}
+<header class="pagehead">
+  <div class="wrap">
+    <h1>{{ page.title }}</h1>
+    <p class="lede">{{ page.description }}</p>
+  </div>
+</header>
+<div class="wrap">
+  <nav class="catnav" aria-label="Topics">
+    <a href="/insurance-news-insights/" {% if not cat %}aria-current="page"{% endif %}>All</a>
+    {% for c in categories if c.posts and c.slug != 'uncategorized' %}
+    <a href="{{ c.url }}" {% if cat and cat.slug == c.slug %}aria-current="page"{% endif %}>{{ c.name }} <small>{{ c.posts|length }}</small></a>
+    {% endfor %}
+  </nav>
+  <div class="cards3">
+    {% for q in items %}{% include "_postcard.html" %}{% endfor %}
+  </div>
+  {% if intro %}
+  <section class="content prose catintro">{{ intro|safe }}</section>
+  {% endif %}
+</div>
+{% endblock %}

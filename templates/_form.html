@@ -1,0 +1,35 @@
+{% set titles = {"contact": "Request a quote or ask a question", "policy-review": "Request your line-by-line policy review", "audit-review": "Request an insurance audit review"} %}
+<div class="formcard">
+  <div class="formcard__intro">
+    <h2>{{ titles.get(form, "Contact us") }}</h2>
+    <p>Tell us a little about your business and a CIA specialist will follow up. Prefer to talk? Call <a href="tel:+1{{ cfg.phone|replace('-', '') }}">{{ cfg.phone }}</a>.</p>
+    <ul class="checks">
+      <li>Specialists in high-risk, highly regulated industries</li>
+      <li>Longstanding relationships with major carriers nationwide</li>
+      <li>Line-by-line review of your existing coverage</li>
+    </ul>
+  </div>
+  <form class="leadform" action="/api/contact" method="post" data-ajax>
+    <input type="hidden" name="form_type" value="{{ form }}">
+    <input type="hidden" name="page" value="{{ page.url }}">
+    <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
+    <div class="row2">
+      <label>Your name*<input name="name" required autocomplete="name" maxlength="120"></label>
+      <label>Company<input name="company" autocomplete="organization" maxlength="160"></label>
+    </div>
+    <div class="row2">
+      <label>Email*<input type="email" name="email" required autocomplete="email" maxlength="160"></label>
+      <label>Phone<input type="tel" name="phone" autocomplete="tel" maxlength="40"></label>
+    </div>
+    <label>Industry
+      <select name="industry">
+        <option value="">Select…</option>
+        {% for c in nav[1].children %}<option>{{ c.label }}</option>{% endfor %}
+        <option>Other</option>
+      </select>
+    </label>
+    <label>How can we help?<textarea name="message" rows="4" maxlength="4000"></textarea></label>
+    <button class="btn btn--gold" type="submit">Send request</button>
+    <p class="formmsg" role="status" aria-live="polite"></p>
+  </form>
+</div>

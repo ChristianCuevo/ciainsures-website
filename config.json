@@ -1,0 +1,80 @@
+{
+  "site_url": "https://ciainsures.com",
+  "name": "Central Insurance Agency",
+  "short_name": "CIA",
+  "tagline": "Commercial insurance for specialty and high-risk industries, nationwide.",
+  "phone": "877-242-9600",
+  "fax": "877-243-8995",
+  "email": "contactus@ciainsures.com",
+  "address": {
+    "street": "93 E. Main Street",
+    "city": "Smithtown",
+    "region": "NY",
+    "postal": "11787",
+    "country": "US"
+  },
+  "mailing_address": "P.O. Box 1047, Smithtown, NY 11787",
+  "hours": "",
+  "license_note": "Doing business in California under license #OH16068 · dba: CIA West Insurance Services",
+  "logo": "/wp-content/uploads/2023/06/cropped-cia-1-1.png",
+  "icon": "/wp-content/uploads/2026/02/cropped-CIA_LOGO.png",
+  "default_image": "/wp-content/uploads/2023/06/hero3-1.webp",
+  "social": {
+    "LinkedIn": "https://www.linkedin.com/company/ciainsures/",
+    "Facebook": "https://www.facebook.com/ciainsures/",
+    "YouTube": "https://www.youtube.com/@CentralInsuranceAgency-n6s"
+  },
+
+  "google_review_url": "",
+  "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Central+Insurance+Agency+93+E+Main+St+Smithtown+NY+11787",
+
+  "nav": [
+    { "label": "Commercial Insurance", "url": "/commercial-insurance-programs/", "children": [
+      { "label": "General Liability", "url": "/commercial-insurance-programs/general-liability-insurance/" },
+      { "label": "Workers' Compensation", "url": "/commercial-insurance-programs/workers-compensation-insurance/" },
+      { "label": "Professional Liability", "url": "/commercial-insurance-programs/professional-liability-insurance/" },
+      { "label": "Excess / Umbrella", "url": "/commercial-insurance-programs/excess-umbrella-insurance/" },
+      { "label": "Commercial Auto", "url": "/commercial-insurance-programs/commercial-auto-insurance/" },
+      { "label": "Employment Practices Liability", "url": "/commercial-insurance-programs/employment-practices-liability/" },
+      { "label": "Bonding", "url": "/commercial-insurance-programs/bonding-insurance/" }
+    ]},
+    { "label": "Industries", "url": "/industry-insurance-specialties/", "children": [
+      { "label": "Security Guard", "url": "/industry-insurance-specialties/security-guard-insurance/" },
+      { "label": "Alarm & Security Systems", "url": "/industry-insurance-specialties/security-services-insurance/" },
+      { "label": "Fire Suppression", "url": "/industry-insurance-specialties/fire-suppression-insurance/" },
+      { "label": "Janitorial / Cleaning", "url": "/industry-insurance-specialties/janitorial-services-insurance-2/" },
+      { "label": "General Contractor", "url": "/industry-insurance-specialties/contractor-insurance/" },
+      { "label": "Specialty Trade Contractor", "url": "/industry-insurance-specialties/specialty-trade-contractor-insurance/" },
+      { "label": "Home Healthcare Agency", "url": "/industry-insurance-specialties/home-healthcare-agency-insurance/" },
+      { "label": "Private Investigator", "url": "/private-investigator-insurance/" }
+    ]},
+    { "label": "Employee Benefits", "url": "/employee-benefits/", "children": [
+      { "label": "Benefits Overview", "url": "/employee-benefits/" },
+      { "label": "Group Health", "url": "/employee-benefits/group-health-insurance/" },
+      { "label": "Voluntary Benefits", "url": "/employee-benefits/voluntary-benefits/" },
+      { "label": "Union Benefits", "url": "/employee-benefits/union-benefits/" }
+    ]},
+    { "label": "Reviews & Audits", "url": "/request-a-policy-review/", "children": [
+      { "label": "Policy Review & Assessment", "url": "/request-a-policy-review/" },
+      { "label": "Insurance Audit Counseling", "url": "/insurance-audit-counseling/" },
+      { "label": "Personal Insurance", "url": "/personal-insurance/" }
+    ]},
+    { "label": "CIA Insider", "url": "/insurance-news-insights/" },
+    { "label": "About", "url": "/about-central-insurance-agency/" }
+  ],
+
+  "forms": {
+    "/contact/": "contact",
+    "/request-a-policy-review/": "policy-review",
+    "/insurance-audit-counseling/": "audit-review"
+  },
+
+  "testimonials": [
+    { "quote": "We wanted a company that would treat us like we were their biggest client. We found that with the entire Central Insurance Agency team. Every time we call, we get a straight answer that is in terminology we can understand. We refer a lot of our customers to CIA and they are pleased with the personal service they receive.",
+      "name": "Michael West", "role": "Chief Operating Officer, Point 2 Point Global Security, Inc.", "place": "Phoenix, MD" },
+    { "quote": "You have consistently gone above and beyond the call of duty, being very attentive and giving special attention to the needs of our company. It is our hope that our business relationship will continue for a very long time.",
+      "name": "Carlos Sutton", "role": "President and CEO, Bel-Air Security, Inc.", "place": "Corona, CA" },
+    { "quote": "My company has been using Central Insurance Agency for over 10 years. Every person we have had the pleasure of working with has been far beyond exceptional. They are very quick to respond and when I have a problem they work with me endlessly until the issue is resolved. I know that with CIA, I am covered and taken care of.",
+      "name": "Jessica Fahmy", "role": "President, Capital Eagle Security, Inc.", "place": "Woodland Hills, CA" }
+  ]
+}

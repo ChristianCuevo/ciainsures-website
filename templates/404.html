@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block main %}
+<section class="pagehead pagehead--center">
+  <div class="wrap narrow">
+    <h1>We couldn't find that page.</h1>
+    <p class="lede">It may have moved. Try one of these instead, or call <a href="tel:+1{{ cfg.phone|replace('-', '') }}">{{ cfg.phone }}</a>.</p>
+    <ul class="links404">
+      {% for item in nav %}<li><a href="{{ item.url }}">{{ item.label }}</a></li>{% endfor %}
+      <li><a href="/contact/">Contact Us</a></li>
+    </ul>
+  </div>
+</section>
+{% endblock %}

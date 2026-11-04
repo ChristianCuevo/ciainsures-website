@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block body_class %}t-page{% endblock %}
+{% block main %}
+{% include "_crumbs.html" %}
+{% if not page.content_has_h1 %}
+<header class="pagehead">
+  <div class="wrap">
+    <h1>{{ page.title }}</h1>
+    {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+  </div>
+</header>
+{% endif %}
+<article class="wrap content prose">
+{{ page.body|safe }}
+</article>
+{% if form %}
+<section class="wrap formsec" id="form">
+  {% include "_form.html" %}
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+# Legacy URL -> current URL (301). Used by nginx (map $uri $redirect_to) and by build-time link rewriting.
+/request-a-quote /contact/;
+/request-a-quote/ /contact/;
+/s/fire_suppression_insurance_application.pdf /contact/;
+/industry-specialties/ /industry-insurance-specialties/;
+/industry-specialties/security-guard-insurance/ /industry-insurance-specialties/security-guard-insurance/;
+/industry-specialties/security-services-insurance/ /industry-insurance-specialties/security-services-insurance/;
+/industry-specialties/fire-suppression-insurance/ /industry-insurance-specialties/fire-suppression-insurance/;
+/industry-specialties/home-healthcare-agency-insurance/ /industry-insurance-specialties/home-healthcare-agency-insurance/;
+/industry-specialties/facilities-maintenance-insurance/ /industry-insurance-specialties/janitorial-services-insurance-2/;
+/industry-specialties/janitorial-services-insurance/ /industry-insurance-specialties/janitorial-services-insurance-2/;
+/industry-insurance-specialties/janitorial-services-insurance/ /industry-insurance-specialties/janitorial-services-insurance-2/;
+/commercial-programs/ /commercial-insurance-programs/;
+/commercial-programs/general-liability-insurance/ /commercial-insurance-programs/general-liability-insurance/;
+/commercial-programs/workers-compensation-insurance/ /commercial-insurance-programs/workers-compensation-insurance/;
+/commercial-programs/professional-liability-insurance/ /commercial-insurance-programs/professional-liability-insurance/;
+/commercial-programs/excess-umbrella-insurance/ /commercial-insurance-programs/excess-umbrella-insurance/;
+/commercial-programs/commercial-auto-insurance/ /commercial-insurance-programs/commercial-auto-insurance/;
+/commercial-programs/employment-practices-liability/ /commercial-insurance-programs/employment-practices-liability/;
+/commercial-programs/bonding/ /commercial-insurance-programs/bonding-insurance/;
+/electrician-electrical-contractor-insurance/ /industry-insurance-specialties/specialty-trade-contractor-insurance/electrician-electrical-contractor-insurance/;
+/concrete-contractor-insurance/ /industry-insurance-specialties/specialty-trade-contractor-insurance/concrete-contractor-insurance/;
+/author/christiancb119d75aae/ /about-central-insurance-agency/;
+/author/lucasw2635d16b4e/ /about-central-insurance-agency/;
+/blog/ /insurance-news-insights/;
+/home/ /;

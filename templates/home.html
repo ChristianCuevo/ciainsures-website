@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block body_class %}t-home{% endblock %}
+{% block main %}
+<section class="hero">
+  <div class="wrap hero__in">
+    <div class="hero__copy">
+      <p class="eyebrow">Nationwide specialty commercial insurance</p>
+      <h1>You're taking care of everything for your business. <span>Does your insurance do the same?</span></h1>
+      <p class="lede">{{ cfg.name }} builds right-sized insurance programs for security, alarm, fire suppression, contractor, janitorial and home healthcare businesses, starting with a line-by-line review of the coverage you have today.</p>
+      <div class="hero__btns">
+        <a class="btn btn--gold" href="/contact/">Request a Quote</a>
+        <a class="btn btn--ghost" href="/request-a-policy-review/">Policy Review</a>
+        <a class="btn btn--ghost" href="/insurance-audit-counseling/">Audit Review</a>
+      </div>
+      <p class="hero__call">Or call <a href="tel:+1{{ cfg.phone|replace('-', '') }}">{{ cfg.phone }}</a></p>
+    </div>
+    <div class="hero__art">
+      <img src="{{ cfg.default_image }}" width="500" height="389" fetchpriority="high"
+           alt="Hexagon pattern of industries insured by Central Insurance Agency: alarm, security, fire suppression, home healthcare and general contractors">
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="wrap trust__in">
+    <div><strong>Nationwide</strong><span>broker &amp; trusted advisor</span></div>
+    <div><strong>Decades</strong><span>of specialty-industry expertise</span></div>
+    <div><strong>Major carriers</strong><span>longstanding relationships</span></div>
+    <div><strong>Line-by-line</strong><span>policy reviews</span></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <header class="sechead">
+      <p class="eyebrow">Industry specialties</p>
+      <h2>Insurance built for the industries we know best</h2>
+      <p>For decades, Central Insurance Agency has provided customized and right-sized insurance solutions to highly specialized industries. How can we help you?</p>
+    </header>
+    <div class="tiles">
+      {% for c in nav[1].children %}
+      {% set p = cards.get(c.url) or {} %}
+      <a class="tile" href="{{ c.url }}">
+        <span class="tile__img">{% if p.image %}<img src="{{ p.image|img }}" alt="" loading="lazy" decoding="async">{% endif %}</span>
+        <span class="tile__body">
+          <strong>{{ c.label }} Insurance</strong>
+          {% if p.description %}<span>{{ p.description|truncate(120) }}</span>{% endif %}
+          <em>Learn more →</em>
+        </span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--tint">
+  <div class="wrap">
+    <header class="sechead">
+      <p class="eyebrow">Commercial insurance programs</p>
+      <h2>Your insurance should be an asset, not a liability</h2>
+      <p>Learn more about each type of coverage and how it can actually work for you.</p>
+    </header>
+    <div class="lines">
+      {% for c in nav[0].children %}
+      {% set p = cards.get(c.url) or {} %}
+      <a class="line" href="{{ c.url }}">
+        <strong>{{ c.label }}</strong>
+        {% if p.description %}<span>{{ p.description|truncate(110) }}</span>{% endif %}
+      </a>
+      {% endfor %}
+      <a class="line line--accent" href="/employee-benefits/">
+        <strong>Employee Benefits</strong>
+        <span>Group health, voluntary benefits and union benefit programs for your team.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">The Central Insurance Agency approach</p>
+      <h2>No cookie-cutter coverage</h2>
+      <p>In a world of cookie-cutter coverage, Central Insurance Agency has maintained a solid reputation as a nationwide broker and trusted advisor for companies in high-touch specialty industries, as well as other growing businesses.</p>
+      <p>By knowing an industry's operations inside and out, we have a unique understanding of the risks a company faces and how impactful the wrong coverage can be on the bottom line.</p>
+      <p><strong>Our bottom line:</strong> conducting a line-by-line review of your existing policy, then customizing coverage that properly supports your growth while protecting your company's assets, products, services and employees, at the best rate available through our longstanding relationships with the major carriers.</p>
+      <a class="btn btn--blue" href="/request-a-policy-review/">Request a Policy Review</a>
+    </div>
+    <div class="video">
+      <video controls preload="none" playsinline
+             poster="{{ '/wp-content/uploads/2023/07/CIA_Video_Screen_Contract_HiRes.jpg'|img }}">
+        <source src="https://videos.files.wordpress.com/if25ejAm/cia-overview-video.mp4.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--navy">
+  <div class="wrap">
+    <header class="sechead sechead--light">
+      <p class="eyebrow">What our clients are saying</p>
+      <h2>Treated like our biggest client</h2>
+    </header>
+    <div class="quotes">
+      {% for t in cfg.testimonials %}
+      <figure class="quote">
+        <blockquote>“{{ t.quote }}”</blockquote>
+        <figcaption><strong>{{ t.name }}</strong><span>{{ t.role }} · {{ t.place }}</span></figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <header class="sechead sechead--row">
+      <div><p class="eyebrow">CIA Insider</p><h2>Latest insurance insights</h2></div>
+      <a class="btn btn--outline" href="/insurance-news-insights/">All articles</a>
+    </header>
+    <div class="cards3">{% for q in latest %}{% include "_postcard.html" %}{% endfor %}</div>
+  </div>
+</section>
+
+<section class="sec sec--tint">
+  <div class="wrap narrow">
+    <header class="sechead"><p class="eyebrow">FAQ</p><h2>Frequently asked questions</h2></header>
+    <div class="faq">
+      {% for f in faqs %}
+      <details{% if loop.first %} open{% endif %}><summary>{{ f.q }}</summary><p>{{ f.a }}</p></details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.seo_title or page.title }}</title>
+{% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+{% if noindex %}<meta name="robots" content="noindex, nofollow">{% else %}<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">{% endif %}
+{% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
+<meta name="theme-color" content="#00212d">
+<link rel="icon" href="{{ cfg.icon }}" sizes="any">
+<link rel="apple-touch-icon" href="{{ cfg.icon }}">
+<link rel="alternate" type="application/rss+xml" title="CIA Insider" href="/feed/">
+{% set og_img = base ~ ((page.image or cfg.default_image)|img) %}
+<meta property="og:site_name" content="{{ cfg.name }}">
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+<meta property="og:title" content="{{ page.seo_title or page.title }}">
+{% if page.description %}<meta property="og:description" content="{{ page.description }}">{% endif %}
+{% if canonical %}<meta property="og:url" content="{{ canonical }}">{% endif %}
+<meta property="og:image" content="{{ og_img }}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/assets/site.css?v={{ asset_v }}">
+{% block head %}{% endblock %}
+{% if ld %}<script type="application/ld+json">{{ ld|safe }}</script>{% endif %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="topbar">
+  <div class="wrap topbar__in">
+    <span>Nationwide commercial insurance broker · Smithtown, NY</span>
+    <span class="topbar__links">
+      <a href="tel:+1{{ cfg.phone|replace('-', '') }}">{{ cfg.phone }}</a>
+      <a href="mailto:{{ cfg.email }}">{{ cfg.email }}</a>
+    </span>
+  </div>
+</div>
+
+<header class="header">
+  <div class="wrap header__in">
+    <a class="brand" href="/" aria-label="{{ cfg.name }} home">
+      <img src="{{ cfg.logo|img }}" alt="{{ cfg.name }}" width="200" height="60">
+    </a>
+    <button class="navtoggle" aria-expanded="false" aria-controls="nav" type="button">
+      <span></span><span></span><span></span><span class="sr">Menu</span>
+    </button>
+    <nav id="nav" class="nav" aria-label="Main">
+      <ul>
+        {% for item in nav %}
+        <li class="{% if item.children %}has-sub{% endif %}{% if page.url and page.url.startswith(item.url) %} is-active{% endif %}">
+          <a href="{{ item.url }}">{{ item.label }}</a>
+          {% if item.children %}
+          <button class="subtoggle" type="button" aria-label="Show {{ item.label }} menu" aria-expanded="false"></button>
+          <ul class="sub">
+            {% for c in item.children %}<li><a href="{{ c.url }}">{{ c.label }}</a></li>{% endfor %}
+          </ul>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      <a class="btn btn--gold nav__cta" href="/contact/">Get a Quote</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+{% block main %}{% endblock %}
+</main>
+
+{% block cta %}
+<section class="ctaband">
+  <div class="wrap ctaband__in">
+    <div>
+      <h2>Is your coverage keeping up with your business?</h2>
+      <p>Get a line-by-line policy review from specialists who know your industry.</p>
+    </div>
+    <div class="ctaband__btns">
+      <a class="btn btn--gold" href="/contact/">Request a Quote</a>
+      <a class="btn btn--ghost" href="tel:+1{{ cfg.phone|replace('-', '') }}">Call {{ cfg.phone }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__about">
+      <img src="{{ cfg.logo|img }}" alt="" width="200" height="60" class="footer__logo" loading="lazy">
+      <p>{{ cfg.tagline }}</p>
+      <address>
+        <strong>{{ cfg.name }}</strong><br>
+        {{ cfg.address.street }}, {{ cfg.address.city }}, {{ cfg.address.region }} {{ cfg.address.postal }}<br>
+        Mailing: {{ cfg.mailing_address }}<br>
+        Phone: <a href="tel:+1{{ cfg.phone|replace('-', '') }}">{{ cfg.phone }}</a> · Fax: {{ cfg.fax }}<br>
+        <a href="mailto:{{ cfg.email }}">{{ cfg.email }}</a>
+      </address>
+      <p class="social">{% for name, url in cfg.social.items() %}<a href="{{ url }}" rel="noopener" target="_blank">{{ name }}</a>{% endfor %}</p>
+    </div>
+    {% for item in nav[:3] %}
+    <div>
+      <h3><a href="{{ item.url }}">{{ item.label }}</a></h3>
+      <ul>{% for c in item.children %}<li><a href="{{ c.url }}">{{ c.label }}</a></li>{% endfor %}</ul>
+    </div>
+    {% endfor %}
+    <div>
+      <h3>Company</h3>
+      <ul>
+        <li><a href="/about-central-insurance-agency/">About Us</a></li>
+        <li><a href="/request-a-policy-review/">Policy Review</a></li>
+        <li><a href="/insurance-audit-counseling/">Audit Counseling</a></li>
+        <li><a href="/insurance-news-insights/">CIA Insider</a></li>
+        <li><a href="/contact/">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer__legal">
+    <span>© {{ year }} {{ cfg.name }}. {{ cfg.license_note }}</span>
+    <a href="/privacy-policy/">Privacy &amp; ADA Policies</a>
+  </div>
+</footer>
+<script src="/assets/site.js?v={{ asset_v }}" defer></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

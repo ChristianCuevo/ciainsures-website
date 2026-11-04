@@ -1,0 +1,21 @@
+[Unit]
+Description=Central Insurance Agency website API (forms + customer feedback)
+After=network.target
+
+[Service]
+User=ciaapi
+Group=ciaapi
+EnvironmentFile=/etc/ciainsures/api.env
+Environment=DB_PATH=/var/lib/ciainsures/data.db
+ExecStart=/usr/bin/python3 /srv/ciainsures/src/api/app.py
+Restart=always
+RestartSec=3
+StateDirectory=ciainsures
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/var/lib/ciainsures
+
+[Install]
+WantedBy=multi-user.target

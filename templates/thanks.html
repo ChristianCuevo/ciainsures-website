@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block cta %}{% endblock %}
+{% block main %}
+<section class="pagehead pagehead--center">
+  <div class="wrap narrow">
+    <h1>Thank you. We received your request.</h1>
+    <p class="lede">A Central Insurance Agency specialist will be in touch. If it's urgent, call <a href="tel:+1{{ cfg.phone|replace('-', '') }}">{{ cfg.phone }}</a>.</p>
+    <p><a class="btn btn--blue" href="/">Back to home</a> <a class="btn btn--outline" href="/insurance-news-insights/">Read CIA Insider</a></p>
+  </div>
+</section>
+{% endblock %}

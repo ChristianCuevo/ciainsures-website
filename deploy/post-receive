@@ -1,0 +1,26 @@
+#!/bin/bash
+# Auto-deploy: runs on the server every time `git push production main` is received.
+# Builds the site into a new release folder, then switches the live symlink atomically.
+set -euo pipefail
+APP=/srv/ciainsures
+GIT_DIR=$APP/repo.git
+export GIT_DIR
+
+while read -r old new ref; do
+  if [ "$ref" != "refs/heads/main" ]; then
+    echo "Ignoring $ref (only main is deployed)"; continue
+  fi
+  echo "==> Checking out $new"
+  git --work-tree="$APP/src" checkout -f main
+  ts=$(date +%Y%m%d-%H%M%S)
+  echo "==> Building site"
+  if ! python3 "$APP/src/build.py" --out "$APP/releases/$ts"; then
+    echo "!! Build failed; the live site was NOT changed."; rm -rf "$APP/releases/$ts"; exit 1
+  fi
+  ln -sfn "$APP/releases/$ts" "$APP/current.tmp" && mv -Tf "$APP/current.tmp" "$APP/current"
+  ls -1dt "$APP"/releases/* | tail -n +6 | xargs -r rm -rf
+  echo "==> Reloading services"
+  sudo /usr/bin/systemctl restart ciainsures-api
+  if sudo /usr/sbin/nginx -t -q; then sudo /usr/bin/systemctl reload nginx; else echo "!! nginx config test failed; not reloaded"; fi
+  echo "==> Deployed $ts ($new)"
+done

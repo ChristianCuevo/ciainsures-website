@@ -1,0 +1,7 @@
+<nav class="crumbs wrap" aria-label="Breadcrumb">
+  <ol>
+    {% for c in crumbs %}
+    <li>{% if not loop.last %}<a href="{{ c.url }}">{{ c.label }}</a>{% else %}<span aria-current="page">{{ c.label }}</span>{% endif %}</li>
+    {% endfor %}
+  </ol>
+</nav>
