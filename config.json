@@ -25,6 +25,21 @@
     "YouTube": "https://www.youtube.com/@CentralInsuranceAgency-n6s"
   },
 
+  "look": "horizon",
+  "looks": [
+    { "id": "horizon", "name": "Horizon", "desc": "Clean and airy: white hero, bright corporate blue",
+      "swatch": "linear-gradient(135deg,#ffffff 0 45%,#1a5fd6 45%)",
+      "fonts": ["Manrope:wght@600;700;800", "Inter:wght@400;500;600"] },
+    { "id": "tide", "name": "Tide", "desc": "Bold: full blue hero, big rounded shapes",
+      "swatch": "linear-gradient(135deg,#0a3a8c,#1e88e5)",
+      "fonts": ["Plus+Jakarta+Sans:wght@400;500;600;700;800"] },
+    { "id": "frost", "name": "Frost", "desc": "Soft: light blue gradients, frosted-glass cards",
+      "swatch": "linear-gradient(135deg,#dbe8ff,#ffffff 55%,#2563eb)",
+      "fonts": ["Sora:wght@600;700", "DM+Sans:wght@400;500;600"] },
+    { "id": "meridian", "name": "Meridian", "desc": "Corporate: crisp navy, sharp corners, grid hero",
+      "swatch": "linear-gradient(135deg,#0a2540 0 55%,#0b5cad 55%)",
+      "fonts": ["Archivo:wght@600;700", "Source+Sans+3:wght@400;600"] }
+  ],
   "google_review_url": "",
   "review_threshold": 5,
   "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Central+Insurance+Agency+93+E+Main+St+Smithtown+NY+11787",

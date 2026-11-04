@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-look="{{ cfg.look or 'horizon' }}">
 <head>
 <meta charset="utf-8">
+{% if preview %}<script>try{var l=new URLSearchParams(location.search).get("look")||localStorage.getItem("cia-look");if(l)document.documentElement.setAttribute("data-look",l);}catch(e){}</script>{% endif %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ page.seo_title or page.title }}</title>
 {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
@@ -21,13 +22,25 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+{% if fonts_url %}<link rel="stylesheet" href="{{ fonts_url }}">{% endif %}
 <link rel="stylesheet" href="/assets/site.css?v={{ asset_v }}">
+<link rel="stylesheet" href="/assets/looks.css?v={{ asset_v }}">
 {% block head %}{% endblock %}
 {% if ld %}<script type="application/ld+json">{{ ld|safe }}</script>{% endif %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
 <a class="skip" href="#main">Skip to content</a>
+{% if preview and looks %}
+<div class="lookbar" role="region" aria-label="Design preview">
+  <div class="wrap lookbar__in">
+    <span class="lookbar__label">Preview a look:</span>
+    <span class="lookbar__opts">
+      {% for l in looks %}<button type="button" data-look-set="{{ l.id }}" data-desc="{{ l.desc }}" aria-pressed="false"><i style="background:{{ l.swatch }}"></i>{{ loop.index }}. {{ l.name }}</button>{% endfor %}
+    </span>
+    <span class="lookbar__desc" aria-live="polite"></span>
+  </div>
+</div>
+{% endif %}
 
 <div class="topbar">
   <div class="wrap topbar__in">

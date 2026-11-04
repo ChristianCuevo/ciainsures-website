@@ -249,8 +249,19 @@ def main():
         cr.append({"label": title, "url": url})
         return cr
 
+    # fonts: the preview loads every look's fonts so the switcher works; the live site loads only the chosen look's
+    looks = cfg.get("looks", [])
+    chosen = [l for l in looks if l["id"] == cfg.get("look")] or looks[:1]
+    families = []
+    for l in (looks if args.noindex else chosen):
+        for f in l["fonts"]:
+            if f not in families:
+                families.append(f)
+    fonts_url = ("https://fonts.googleapis.com/css2?" + "&".join("family=" + f for f in families) + "&display=swap") if families else ""
+
     common = dict(cfg=cfg, base=base, asset_v=asset_v, year=datetime.now().year, nav=cfg["nav"],
-                  categories=categories, latest=posts[:3], force_noindex=args.noindex)
+                  categories=categories, latest=posts[:3], force_noindex=args.noindex,
+                  preview=args.noindex, looks=looks, fonts_url=fonts_url)
 
     def render(tpl, **ctx):
         return env.get_template(tpl).render(**common, **ctx)
@@ -283,7 +294,8 @@ def main():
                           "thumbnailUrl": base + "/wp-content/uploads/2023/07/CIA_Video_Screen_Contract_HiRes.jpg",
                           "uploadDate": "2023-08-24T14:50:46-04:00",
                           "contentUrl": "https://videos.files.wordpress.com/if25ejAm/cia-overview-video.mp4.mp4"})
-            cards = {c["url"]: pages.get(c["url"], {}) for item in cfg["nav"] for c in item.get("children", [])}
+            by_url = {**{q["url"]: q for q in posts}, **pages}  # some menu items (e.g. Private Investigator) are posts
+            cards = {c["url"]: by_url.get(c["url"], {}) for item in cfg["nav"] for c in item.get("children", [])}
             markup = render("home.html", page=p, cards=cards, faqs=home_faqs, ld=ld_json(graph),
                             canonical=base + "/")
         else:

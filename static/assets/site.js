@@ -1,6 +1,25 @@
 (function () {
   "use strict";
 
+  // ---- look switcher (GitHub preview only): applies instantly and remembers the choice across pages
+  var lookBtns = document.querySelectorAll("[data-look-set]");
+  if (lookBtns.length) {
+    var root = document.documentElement, desc = document.querySelector(".lookbar__desc");
+    var setLook = function (id, save) {
+      root.setAttribute("data-look", id);
+      lookBtns.forEach(function (b) {
+        var on = b.getAttribute("data-look-set") === id;
+        b.setAttribute("aria-pressed", on);
+        if (on && desc) desc.textContent = b.getAttribute("data-desc");
+      });
+      if (save) { try { localStorage.setItem("cia-look", id); } catch (e) {} }
+    };
+    lookBtns.forEach(function (b) {
+      b.addEventListener("click", function () { setLook(b.getAttribute("data-look-set"), true); });
+    });
+    setLook(root.getAttribute("data-look"), false);
+  }
+
   // ---- mobile navigation
   var toggle = document.querySelector(".navtoggle"), nav = document.getElementById("nav");
   if (toggle && nav) {
