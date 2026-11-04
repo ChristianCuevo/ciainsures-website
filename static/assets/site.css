@@ -289,14 +289,12 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);bo
 .links404{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
 .links404 a{display:block;padding:.55rem 1rem;border:1px solid var(--line);border-radius:999px;text-decoration:none}
 
-/* every card / box grows slightly on hover (same feel as the industry tiles) */
-.tile,.pcard,.line,.trust__in>div,.quote,.authorbox,.answer,.formcard,.links404 a,.catnav a,
-.prose .wp-block-column:has(> .wp-block-image, > .wp-block-heading),.prose .wp-block-group{
+/* clickable boxes (links to another page) grow slightly on hover; static boxes don't move */
+.tile,.pcard,.line,.links404 a,.catnav a{
   transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease,background-color .22s ease}
-.tile:hover,.pcard:hover,.line:hover,.trust__in>div:hover,.quote:hover,.authorbox:hover,.answer:hover,.links404 a:hover,.catnav a:hover,
-.prose .wp-block-column:has(> .wp-block-image, > .wp-block-heading):hover,.prose .wp-block-group:hover{
+.tile:hover,.pcard:hover,.line:hover,.links404 a:hover,.catnav a:hover,
+.tile:focus-visible,.pcard:focus-visible,.line:focus-visible{
   transform:translateY(-4px) scale(1.025);box-shadow:var(--shadow);position:relative;z-index:2}
-.formcard:hover{transform:scale(1.008);box-shadow:var(--shadow)}
 
 /* answer-first summary (AEO) + freshness line */
 .answer{display:grid;gap:.35rem;background:var(--tint);border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:var(--radius);padding:1.1rem 1.3rem;margin:0 0 2rem}
@@ -306,4 +304,4 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);bo
 .related--service{padding-bottom:1rem}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}
-  .tile:hover,.pcard:hover,.line:hover,.trust__in>div:hover,.quote:hover,.authorbox:hover,.answer:hover,.links404 a:hover,.catnav a:hover,.formcard:hover{transform:none}}
+  .tile:hover,.pcard:hover,.line:hover,.links404 a:hover,.catnav a:hover{transform:none}}
