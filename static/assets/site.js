@@ -60,12 +60,22 @@
     var params = new URLSearchParams(location.search);
     var who = (params.get("n") || params.get("name") || "").slice(0, 60);
     var ref = (params.get("ref") || params.get("p") || "").slice(0, 80);
-    if (who) { var hi = fb.querySelector(".fb__hi"); hi.textContent = "Hi " + who + ","; hi.hidden = false; }
-    var state = { id: null, rating: 0 };
+    var threshold = +fb.getAttribute("data-threshold") || 5;
+    if (who) {
+      fb.querySelectorAll(".fb__hi").forEach(function (hi) { hi.textContent = "Hi " + who + ","; hi.hidden = false; });
+    }
+    var state = { token: (params.get("t") || "").slice(0, 64), rating: 0 };
 
     function show(step) {
       fb.querySelectorAll(".fb__step").forEach(function (s) { s.hidden = s.getAttribute("data-step") !== step; });
-      fb.scrollIntoView({ behavior: "smooth", block: "start" });
+      var given = fb.querySelector(".fb__given");
+      if (given) given.textContent = "★★★★★".slice(0, state.rating) + "☆☆☆☆☆".slice(0, 5 - state.rating);
+    }
+    // Arrived from a star in the email: the rating is already recorded, go straight to the next step.
+    var preset = parseInt(params.get("s"), 10);
+    if (preset >= 1 && preset <= 5) {
+      state.rating = preset;
+      show(preset >= threshold ? "happy" : "unhappy");
     }
     var stars = fb.querySelectorAll(".star");
     function paint(n) { stars.forEach(function (s, i) { s.classList.toggle("is-on", i < n); }); }
@@ -76,15 +86,15 @@
       s.addEventListener("click", function () {
         state.rating = v; paint(v);
         stars.forEach(function (x) { x.setAttribute("aria-checked", x === s); });
-        post("/api/feedback", { rating: v, name: who, ref: ref, page: location.pathname })
-          .then(function (j) { state.id = j.id; }).catch(function () {});
-        setTimeout(function () { show(v >= 4 ? "happy" : "unhappy"); }, 250);
+        post("/api/feedback", { rating: v, name: who, ref: ref, token: state.token })
+          .then(function (j) { state.token = j.token; }).catch(function () {});
+        setTimeout(function () { show(v >= threshold ? "happy" : "unhappy"); }, 250);
       });
     });
     fb.querySelectorAll("[data-track=google]").forEach(function (a) {
       a.addEventListener("click", function () {
         if (navigator.sendBeacon) {
-          navigator.sendBeacon("/api/feedback/click", new Blob([JSON.stringify({ id: state.id })], { type: "application/json" }));
+          navigator.sendBeacon("/api/feedback/click", new Blob([JSON.stringify({ token: state.token })], { type: "application/json" }));
         }
       });
     });
@@ -92,11 +102,12 @@
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         var d = formData(form);
-        d.id = state.id; d.rating = state.rating; d.ref = ref;
+        d.token = state.token; d.rating = state.rating; d.ref = ref;
         if (!d.name) d.name = who;
         var btn = form.querySelector("button[type=submit]"); btn.disabled = true;
-        post("/api/feedback", d).then(function () {
-          if (state.rating >= 4) { msg(form, "Thank you, your note was sent to our team.", true); }
+        post("/api/feedback", d).then(function (j) {
+          state.token = j.token || state.token;
+          if (state.rating >= threshold) { msg(form, "Thank you, your note was sent to our team.", true); }
           else { show("done"); }
         }).catch(function (err) { msg(form, err.message, false); btn.disabled = false; });
       });

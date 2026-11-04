@@ -26,6 +26,7 @@
   },
 
   "google_review_url": "",
+  "review_threshold": 5,
   "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Central+Insurance+Agency+93+E+Main+St+Smithtown+NY+11787",
 
   "nav": [

@@ -1,0 +1,68 @@
+<!--
+  templateType: email
+  isAvailableForNewContent: true
+  label: CIA - How did we do (post-signing)
+-->
+{#
+  Coded email template for HubSpot (Marketing > Files and Templates > Design Tools > upload/paste as a coded email template).
+  Sent by the deal-based workflow "Closed won -> How did we do?" (see hubspot/SETUP.md).
+  Each star links to the CIA server, which records the rating, writes it to the contact record,
+  and shows the Google review button only for 5 stars.
+#}
+{% set review_base = "https://reviews.ciainsures.com/api/r" %}
+{% set q = "&cid=" ~ contact.hs_object_id ~ "&e=" ~ (contact.email|urlencode) ~ "&n=" ~ (contact.firstname|urlencode) %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
+<title>How did we do?</title>
+<style>
+  @media (max-width: 480px) { .star a { width: 44px !important; height: 44px !important; line-height: 44px !important; font-size: 24px !important; } .pad { padding: 28px 20px !important; } }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#eef3f6;">
+<div style="display:none;max-height:0;overflow:hidden;">One quick question about your new policy. It takes 10 seconds.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef3f6;">
+  <tr><td align="center" style="padding:28px 12px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:580px;background:#ffffff;border-radius:14px;overflow:hidden;">
+      <tr><td style="background:#00212d;padding:20px 32px;">
+        <span style="font:700 15px Arial,Helvetica,sans-serif;color:#ffffff;letter-spacing:.04em;">CENTRAL INSURANCE AGENCY</span>
+        <span style="font:400 12px Arial,Helvetica,sans-serif;color:#a8e4ff;display:block;margin-top:2px;">Now you're covered.</span>
+      </td></tr>
+      <tr><td class="pad" style="padding:36px 40px 12px;font:400 16px/1.6 Arial,Helvetica,sans-serif;color:#14232b;">
+        <p style="margin:0 0 16px;">Hi {{ contact.firstname or "there" }},</p>
+        <p style="margin:0 0 16px;">Thank you for choosing Central Insurance Agency. Now that your new coverage is in place, we'd love to know: <strong>how did we do?</strong></p>
+        <p style="margin:0 0 8px;">Tap a star to rate your experience:</p>
+      </td></tr>
+      <tr><td align="center" style="padding:8px 24px 6px;">
+        <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+          {% for s in [1, 2, 3, 4, 5] %}
+          <td class="star" style="padding:0 4px;">
+            <a href="{{ review_base }}?s={{ s }}{{ q }}" target="_blank"
+               style="display:block;width:54px;height:54px;line-height:54px;text-align:center;border-radius:12px;background:#fff8e0;border:1px solid #f6be00;color:#f6be00;font:700 30px Arial,Helvetica,sans-serif;text-decoration:none;"
+               title="{{ s }} star{{ 's' if s > 1 }}">&#9733;</a>
+            <div style="font:700 12px Arial,Helvetica,sans-serif;color:#566874;text-align:center;margin-top:6px;">{{ s }}</div>
+          </td>
+          {% endfor %}
+        </tr></table>
+        <table role="presentation" width="300" cellpadding="0" cellspacing="0" style="max-width:300px;"><tr>
+          <td style="font:400 12px Arial,Helvetica,sans-serif;color:#7d8f9a;padding-top:4px;">Not great</td>
+          <td align="right" style="font:400 12px Arial,Helvetica,sans-serif;color:#7d8f9a;padding-top:4px;">Excellent</td>
+        </tr></table>
+      </td></tr>
+      <tr><td class="pad" style="padding:24px 40px 34px;font:400 15px/1.6 Arial,Helvetica,sans-serif;color:#566874;">
+        <p style="margin:0 0 14px;">Your answer goes directly to our team. If anything wasn't right, we want to hear about it so we can help.</p>
+        <p style="margin:0;">Thank you,<br><strong style="color:#14232b;">The Central Insurance Agency team</strong><br>877-242-9600 · contactus@ciainsures.com</p>
+      </td></tr>
+      <tr><td style="background:#f3f7f9;padding:18px 32px;font:400 11px/1.6 Arial,Helvetica,sans-serif;color:#7d8f9a;">
+        {{ site_settings.company_name }} · {{ site_settings.company_street_address_1 }}, {{ site_settings.company_city }}, {{ site_settings.company_state }} {{ site_settings.company_zip }}<br>
+        You're receiving this because you recently placed a policy with us.
+        <a href="{{ unsubscribe_link }}" style="color:#7d8f9a;">Manage preferences</a> · <a href="{{ unsubscribe_link_all }}" style="color:#7d8f9a;">Unsubscribe</a>
+      </td></tr>
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>

@@ -3,7 +3,7 @@
 {% block cta %}{% endblock %}
 {% block main %}
 {% set review_url = cfg.google_review_url or cfg.google_maps_url %}
-<section class="fb wrap" id="fb" data-review-url="{{ review_url }}">
+<section class="fb wrap" id="fb" data-threshold="{{ cfg.review_threshold or 5 }}">
   <div class="fb__card">
     <img class="fb__logo" src="{{ cfg.icon|img }}" alt="" width="64" height="64">
 
@@ -19,36 +19,37 @@
     </div>
 
     <div class="fb__step" data-step="happy" hidden>
-      <h2>We're so glad to hear it!</h2>
+      <p class="stars stars--static" aria-label="You rated us 5 stars">★★★★★</p>
+      <h1><span class="fb__hi" hidden></span>Thank you! That means a lot to our team.</h1>
       <p>Would you share your experience on Google? It takes about a minute and helps other business owners find a broker they can trust.</p>
-      <a class="btn btn--gold btn--big" href="{{ review_url }}" target="_blank" rel="noopener" data-track="google">Leave a Google review</a>
+      <a class="btn btn--gold btn--big" href="{{ review_url }}" target="_blank" rel="noopener" data-track="google">Leave us a Google review</a>
       <form class="fb__note" data-ajax-feedback>
-        <label>Anything you'd like to tell our team privately? (optional)
-          <textarea name="comment" rows="3" maxlength="3000"></textarea></label>
+        <label for="fb-note-happy">Anything you'd like to tell our team? (optional)
+          <textarea id="fb-note-happy" name="comment" rows="3" maxlength="3000"></textarea></label>
         <button class="btn btn--outline" type="submit">Send to our team</button>
         <p class="formmsg" role="status" aria-live="polite"></p>
       </form>
     </div>
 
     <div class="fb__step" data-step="unhappy" hidden>
-      <h2>We're sorry we missed the mark.</h2>
-      <p>Please tell us what happened. Your message goes directly to our team so we can follow up and make it right.</p>
+      <p class="stars stars--static fb__given" aria-hidden="true"></p>
+      <h1><span class="fb__hi" hidden></span>Thank you for the honest feedback.</h1>
+      <p>What would have made this a 5-star experience? Your answer goes only to our team, and we'll follow up to help.</p>
       <form class="fb__note" data-ajax-feedback>
-        <label>What could we have done better?*
-          <textarea name="comment" rows="4" required maxlength="3000"></textarea></label>
+        <label for="fb-note-unhappy">What could we have done better?*
+          <textarea id="fb-note-unhappy" name="comment" rows="4" required maxlength="3000"></textarea></label>
         <div class="row2">
-          <label>Your name<input name="name" autocomplete="name" maxlength="120"></label>
-          <label>Phone or email<input name="contact" maxlength="160"></label>
+          <label for="fb-name">Your name<input id="fb-name" name="name" autocomplete="name" maxlength="120"></label>
+          <label for="fb-contact">Best phone or email<input id="fb-contact" name="contact" maxlength="160"></label>
         </div>
-        <button class="btn btn--gold" type="submit">Send feedback</button>
+        <button class="btn btn--gold" type="submit">Send to our team</button>
         <p class="formmsg" role="status" aria-live="polite"></p>
       </form>
-      <p class="fb__public">You're also welcome to <a href="{{ review_url }}" target="_blank" rel="noopener" data-track="google">share a review on Google</a>.</p>
     </div>
 
     <div class="fb__step" data-step="done" hidden>
-      <h2>Thank you!</h2>
-      <p>Your feedback has been received. If you have questions about your policy, call us any time at <a href="tel:+1{{ cfg.phone|replace('-', '') }}">{{ cfg.phone }}</a>.</p>
+      <h1>Thank you.</h1>
+      <p>Your feedback went straight to our team, and someone will reach out. If you need anything sooner, call us at <a href="tel:+1{{ cfg.phone|replace('-', '') }}">{{ cfg.phone }}</a>.</p>
     </div>
   </div>
 </section>

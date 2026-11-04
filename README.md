@@ -33,18 +33,22 @@ Each content file starts with a settings block:
 
 To add a blog post, copy an existing file in `content/posts/`, change `url`, `title`, `seo_title`, `description`, `published`, `modified` and `categories` (category slugs from `data/categories.json`), then replace the HTML.
 
-## Customer feedback → Google reviews
+## Client satisfaction → Google reviews (private, from HubSpot)
 
-* Send new customers: `https://ciainsures.com/feedback/?n=FirstName&ref=PolicyNumber`
-  (the admin page builds this link and a ready-to-send message for you).
-* 4–5 stars → the customer is invited to leave a Google review (big button).
-* 1–3 stars → a private "what could we do better?" form goes to your team. A small Google link remains visible,
-  because Google's review policy and the FTC's 2024 rule on consumer reviews prohibit hiding the review option
-  from unhappy customers ("review gating").
-* Set the real review link in `config.json` → `google_review_url` (Google Business Profile → "Ask for reviews").
-  Until then the button opens your Google Maps listing.
+Nothing about reviews appears on the public website. When a HubSpot deal reaches **Closed won**, a HubSpot workflow
+emails the client five stars ("How did we do?"). Each star links to `reviews.ciainsures.com`:
 
-**Admin dashboard:** `https://ciainsures.com/api/admin` (user `admin`). It shows ratings, comments, Google click-throughs and quote requests, with CSV export.
+* **5 stars:** the client gets a "Leave us a Google review" button.
+* **1–4 stars:** a private feedback form only. The rating and comment are saved on the HubSpot contact (and as a note on the deal),
+  and the deal owner gets a follow-up task.
+
+Setup steps (DNS record, private app token, email template, workflow) are in **`hubspot/SETUP.md`**.
+Note: Google's review policy prohibits asking only satisfied customers for reviews. Asking only 5-star clients was
+a deliberate business decision. The cutoff is `REVIEW_THRESHOLD` in `/etc/ciainsures/api.env` and `review_threshold` in `config.json`.
+Set the real review link in `config.json` → `google_review_url` (Google Business Profile → "Ask for reviews").
+Until then the button opens your Google Maps listing.
+
+**Admin dashboard:** `https://ciainsures.com/api/admin` (user `admin`). It shows ratings, private comments, HubSpot sync status, Google click-throughs and website quote requests, with CSV export.
 Password and optional e-mail alerts are set in `/etc/ciainsures/api.env` on the server (`systemctl restart ciainsures-api` after editing).
 
 ## SEO / AEO features

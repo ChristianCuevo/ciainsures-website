@@ -271,7 +271,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);bo
 .star:hover,.star.is-on{color:var(--gold)}
 .star:hover{transform:scale(1.12)}
 .stars__hint{display:flex;justify-content:space-between;max-width:300px;margin:.3rem auto 0;color:var(--muted);font-size:.82rem}
-.fb__public{margin-top:1.5rem;font-size:.9rem;color:var(--muted)}
+.stars--static{color:var(--gold);font-size:2rem;letter-spacing:.2em;margin:0 0 .5rem}
+.fb__card .btn--big{margin-top:.5rem}
 .links404{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
 .links404 a{display:block;padding:.55rem 1rem;border:1px solid var(--line);border-radius:999px;text-decoration:none}
 
