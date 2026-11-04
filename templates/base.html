@@ -2,10 +2,11 @@
 <html lang="en" data-look="{{ cfg.look or 'horizon' }}">
 <head>
 <meta charset="utf-8">
-{% if preview %}<script>try{var l=new URLSearchParams(location.search).get("look")||localStorage.getItem("cia-look");if(l)document.documentElement.setAttribute("data-look",l);}catch(e){}</script>{% endif %}
+{% if preview %}<script>try{var ok={{ looks|map(attribute='id')|list|tojson }},l=new URLSearchParams(location.search).get("look")||localStorage.getItem("cia-look");if(ok.indexOf(l)>-1)document.documentElement.setAttribute("data-look",l);}catch(e){}</script>{% endif %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ page.seo_title or page.title }}</title>
-{% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+{% set desc = page.description|metadesc %}
+{% if desc %}<meta name="description" content="{{ desc }}">{% endif %}
 {% if noindex or force_noindex %}<meta name="robots" content="noindex, nofollow">{% else %}<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">{% endif %}
 {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
 <meta name="theme-color" content="#00212d">
@@ -16,10 +17,15 @@
 <meta property="og:site_name" content="{{ cfg.name }}">
 <meta property="og:type" content="{% block og_type %}website{% endblock %}">
 <meta property="og:title" content="{{ page.seo_title or page.title }}">
-{% if page.description %}<meta property="og:description" content="{{ page.description }}">{% endif %}
+{% if desc %}<meta property="og:description" content="{{ desc }}">{% endif %}
 {% if canonical %}<meta property="og:url" content="{{ canonical }}">{% endif %}
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="{{ og_img }}">
+<meta property="og:image:alt" content="{{ page.title }}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.seo_title or page.title }}">
+{% if desc %}<meta name="twitter:description" content="{{ desc }}">{% endif %}
+<meta name="format-detection" content="telephone=yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {% if fonts_url %}<link rel="stylesheet" href="{{ fonts_url }}">{% endif %}

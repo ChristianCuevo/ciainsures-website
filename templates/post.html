@@ -15,6 +15,7 @@
     {% if page.date %} · <time datetime="{{ page.published }}">{{ page.date|date }}</time>{% endif %}
     · {{ page.minutes }} min read
   </p>
+  {% if answer %}{{ answer|safe }}{% endif %}
 </header>
 {% if page.image and page.image not in page.body %}
 <figure class="wrap narrow postimg"><img src="{{ page.image|img }}" alt="{{ page.title }}" fetchpriority="high" decoding="async"></figure>

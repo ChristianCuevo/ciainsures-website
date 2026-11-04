@@ -6,16 +6,28 @@
 <header class="pagehead">
   <div class="wrap">
     <h1>{{ page.title }}</h1>
-    {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+    {% if not answer and page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
   </div>
 </header>
 {% endif %}
 <article class="wrap content prose">
+{% if answer %}{{ answer|safe }}{% endif %}
 {{ page.body|safe }}
 </article>
 {% if form %}
 <section class="wrap formsec" id="form">
   {% include "_form.html" %}
+</section>
+{% endif %}
+{% if rel_posts %}
+<section class="wrap related related--service" aria-labelledby="rel-h">
+  <div class="sechead sechead--row">
+    <div><p class="eyebrow">CIA Insider</p><h2 id="rel-h">{{ rel_cat.name }} insights</h2></div>
+    <a class="btn btn--outline" href="{{ rel_cat.url }}">More {{ rel_cat.name|lower }} articles</a>
+  </div>
+  <div class="cards3">
+    {% for q in rel_posts %}{% include "_postcard.html" %}{% endfor %}
+  </div>
 </section>
 {% endif %}
 {% endblock %}

@@ -117,6 +117,64 @@ def extract_faqs(markup: str):
     return out if len(out) >= 2 else []
 
 
+_ALT_JUNK = re.compile(r"^(cia|img|image|dsc|screenshot|photo|cropped|untitled|ciasquareinternalimages)\d*$", re.I)
+
+
+def alt_from_src(src: str):
+    """Readable alt text from an image file name, e.g. 'negligent-security-liability.png' -> 'Negligent security liability'."""
+    name = Path(src.split("?")[0]).name
+    name = re.sub(r"(\.(png|jpe?g|webp|gif))+$", "", name, flags=re.I)
+    name = re.sub(r"-\d+x\d+$", "", name)
+    words = [w for w in re.split(r"[-_\s]+", name) if w and not re.fullmatch(r"\d+|\d{4}-\d\d-\d\dt\d+\.\d+|v\d+|copy", w, re.I)]
+    words = [w for w in words if not _ALT_JUNK.match(w)]
+    if len(words) < 2:
+        return None
+    text = " ".join(words)
+    return text[0].upper() + text[1:].lower()
+
+
+def fill_alts(markup: str, title: str) -> str:
+    """Give every content image a description (SEO + accessibility) when the original had none."""
+    def repl(m):
+        tag = m.group(0)
+        if re.search(r'\balt="[^"]+"', tag):
+            return tag
+        src = re.search(r'src="([^"]+)"', tag)
+        alt = html.escape((alt_from_src(src.group(1)) if src else None) or title, quote=True)
+        tag = re.sub(r'\salt=""', "", tag)
+        return tag.replace("<img", f'<img alt="{alt}"', 1)
+    return re.sub(r"<img\b[^>]*>", repl, markup)
+
+
+def meta_desc(text: str, n=158) -> str:
+    """Trim a meta description to what Google displays, ending on a sentence or word boundary."""
+    text = " ".join((text or "").split())
+    if len(text) <= n:
+        return text
+    cut = text[:n]
+    dot = max(cut.rfind(". "), cut.rfind("? "), cut.rfind("! "))
+    if dot > 90:
+        return cut[:dot + 1]
+    return cut.rsplit(" ", 1)[0].rstrip(",;:–-") + "…"
+
+
+def insert_after_heading(markup: str, snippet: str) -> str:
+    """Place a snippet right after the top-level block that contains the page's H1 (e.g. a cover/hero block)."""
+    soup = BeautifulSoup(markup, "html.parser")
+    h1 = soup.find("h1")
+    if not h1:
+        return snippet + markup
+    top = h1
+    while top.parent is not None and top.parent is not soup:
+        top = top.parent
+    top.insert_after(BeautifulSoup(snippet, "html.parser"))
+    return str(soup)
+
+
+def content_images(markup: str):
+    return re.findall(r'<img\b[^>]*\bsrc="(/wp-content/uploads/[^"]+)"', markup)
+
+
 def reading_minutes(markup: str) -> int:
     return max(1, math.ceil(len(text_of(markup).split()) / 230))
 
@@ -130,14 +188,22 @@ def summary(markup: str, n=200):
 def org_schema(cfg):
     base = cfg["site_url"]
     a = cfg["address"]
+    services = [c for item in cfg["nav"][:3] for c in item.get("children", [])]
     org = {
         "@type": ["InsuranceAgency", "Organization"],
         "@id": f"{base}/#organization",
         "name": cfg["name"],
         "alternateName": [cfg["short_name"], "CIA West Insurance Services"],
+        "slogan": "Now you're covered.",
+        "description": cfg["tagline"],
         "url": base + "/",
-        "logo": base + cfg["logo"],
+        "logo": {"@type": "ImageObject", "url": base + cfg["logo"], "width": 200, "height": 60},
         "image": base + cfg["default_image"],
+        "hasMap": cfg.get("google_maps_url"),
+        "contactPoint": {"@type": "ContactPoint", "telephone": "+1-" + cfg["phone"], "email": cfg["email"],
+                         "contactType": "customer service", "areaServed": "US", "availableLanguage": "English"},
+        "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Commercial insurance programs", "itemListElement": [
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": c["label"], "url": base + c["url"]}} for c in services]},
         "telephone": "+1-" + cfg["phone"],
         "faxNumber": "+1-" + cfg["fax"],
         "email": cfg["email"],
@@ -223,6 +289,29 @@ def main():
                       trim_blocks=True, lstrip_blocks=True)
     env.filters["date"] = lambda d, fmt="%B %-d, %Y": d.strftime(fmt.replace("%-d", str(d.day))) if d else ""
     env.filters["img"] = lambda src: (src + ".webp") if src and (static / (src.lstrip("/") + ".webp")).exists() else src
+    env.filters["metadesc"] = meta_desc
+
+    # prepare bodies: image alt text everywhere
+    for p in list(pages.values()) + posts:
+        p["body"] = fill_alts(p["body"], p["title"])
+
+    speakable = {"@type": "SpeakableSpecification", "cssSelector": ["h1", ".answer"]}
+    rel_map = cfg.get("related_categories", {})
+
+    def related_for(url):
+        best = max((k for k in rel_map if url.startswith(k)), key=len, default=None)
+        c = cat_by_slug.get(rel_map.get(best)) if best else None
+        return (c, [q for q in posts if c in q["cats"]][:3]) if c else (None, [])
+
+    def answer_box(text, modified):
+        if not text or len(text) < 60:
+            return ""
+        d = parse_date(modified)
+        upd = f'<p class="updated">Last updated <time datetime="{d.date().isoformat()}">{d.strftime("%B")} {d.day}, {d.year}</time></p>' if d else ""
+        return (f'<aside class="answer" aria-label="Summary"><span class="answer__label">In short</span>'
+                f'<p>{html.escape(text)}</p></aside>{upd}')
+
+    image_index = {}
 
     page_title = {u: p["title"] for u, p in pages.items()}
     sitemap = []
@@ -274,8 +363,10 @@ def main():
             {"@type": "WebPage", "@id": base + url + "#webpage", "url": base + url, "name": p["seo_title"],
              "description": p.get("description", ""), "isPartOf": {"@id": base + "/#website"},
              "about": {"@id": base + "/#organization"}, "inLanguage": "en-US",
+             "speakable": speakable,
              **({"dateModified": p["modified"]} if p.get("modified") else {}),
              **({"primaryImageOfPage": base + p["image"]} if p.get("image") else {})}]
+        image_index[url] = [x for x in [p.get("image")] + content_images(p["body"]) if x]
         if url != "/":
             graph.append(breadcrumb_schema(base, crumbs))
         if any(url.startswith(x) for x in ("/commercial-insurance-programs/", "/industry-insurance-specialties/",
@@ -301,8 +392,14 @@ def main():
         else:
             if faqs:
                 graph.append(faq_schema(faqs))
-            markup = render("page.html", page=p, crumbs=crumbs, form=cfg["forms"].get(url),
-                            ld=ld_json(graph), canonical=base + url)
+            answer = answer_box(p.get("description"), p.get("modified"))
+            view = dict(p)
+            if p.get("content_has_h1"):  # hero is inside the content: put the summary right after it
+                view["body"] = insert_after_heading(p["body"], answer) if answer else p["body"]
+                answer = ""
+            rel_cat, rel_posts = related_for(url)
+            markup = render("page.html", page=view, crumbs=crumbs, form=cfg["forms"].get(url), answer=answer,
+                            rel_cat=rel_cat, rel_posts=rel_posts, ld=ld_json(graph), canonical=base + url)
         write(url, markup)
         sitemap.append((url, p.get("modified"), "1.0" if url == "/" else "0.8"))
 
@@ -321,12 +418,19 @@ def main():
              "mainEntityOfPage": base + url, "inLanguage": "en-US",
              "datePublished": p.get("published"), "dateModified": p.get("modified") or p.get("published"),
              "author": {"@id": base + "/#organization"}, "publisher": {"@id": base + "/#organization"},
-             "articleSection": [c["name"] for c in p["cats"]], "wordCount": len(text_of(p["body"]).split())},
+             "articleSection": [c["name"] for c in p["cats"]], "wordCount": len(text_of(p["body"]).split()),
+             "speakable": speakable},
             breadcrumb_schema(base, crumbs)]
+        image_index[url] = [x for x in [p.get("image")] + content_images(p["body"]) if x]
         if faqs:
             graph.append(faq_schema(faqs))
         related = [q for q in posts if q is not p and p["cats"] and p["cats"][0] in q["cats"]][:3]
-        write(url, render("post.html", page=p, crumbs=crumbs, related=related, ld=ld_json(graph),
+        answer = answer_box(p.get("description"), p.get("modified"))
+        view = dict(p)
+        if p.get("content_has_h1") and answer:
+            view["body"] = insert_after_heading(p["body"], answer)
+            answer = ""
+        write(url, render("post.html", page=view, crumbs=crumbs, related=related, answer=answer, ld=ld_json(graph),
                           canonical=base + url))
         sitemap.append((url, p.get("modified"), "0.6"))
 
@@ -372,9 +476,15 @@ def main():
     for url, mod, prio in sitemap:
         d = parse_date(mod)
         lm = f"<lastmod>{d.date().isoformat()}</lastmod>" if d else ""
-        rows.append(f"<url><loc>{xml_escape(base + url)}</loc>{lm}<priority>{prio}</priority></url>")
+        seen = []
+        for i in image_index.get(url, []):
+            if i not in seen:
+                seen.append(i)
+        imgs = "".join(f"<image:image><image:loc>{xml_escape(base + i)}</image:loc></image:image>" for i in seen[:10])
+        rows.append(f"<url><loc>{xml_escape(base + url)}</loc>{lm}<priority>{prio}</priority>{imgs}</url>")
     (out / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n'
-                                     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+                                     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+                                     'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
                                      + "\n".join(rows) + "\n</urlset>\n", encoding="utf-8")
 
     # ---- robots.txt (search + AI answer engines explicitly welcome; preview builds block everything)
@@ -408,6 +518,27 @@ def main():
         lines.append(f"- [{p['title']}]({base}{p['url']})" + (f": {p['description']}" if p.get("description") else ""))
     lines += ["", "## Contact", f"- [Contact us]({base}/contact/)", f"- Phone: {cfg['phone']}", f"- Email: {cfg['email']}", ""]
     (out / "llms.txt").write_text("\n".join(lines), encoding="utf-8")
+
+    # ---- llms-full.txt (plain-text copy of the core pages, so AI assistants can quote accurately)
+    full = [f"# {cfg['name']}: full text of core pages", "",
+            f"Source: {base}/  ·  Phone {cfg['phone']}  ·  {cfg['email']}  ·  "
+            f"{cfg['address']['street']}, {cfg['address']['city']}, {cfg['address']['region']} {cfg['address']['postal']}", ""]
+    core = [c["url"] for item in cfg["nav"] for c in (item.get("children") or [item])] + \
+           ["/about-central-insurance-agency/", "/request-a-policy-review/", "/insurance-audit-counseling/", "/contact/"]
+    by_url_all = {**{q["url"]: q for q in posts}, **pages}
+    done = set()
+    for u in core:
+        p = by_url_all.get(u)
+        if not p or u in done:
+            continue
+        done.add(u)
+        full += [f"## {p['title']}", f"URL: {base}{u}", ""]
+        if p.get("description"):
+            full += [p["description"], ""]
+        full += [text_of(p["body"]), ""]
+    home_faqs = json.loads((ROOT / "data" / "home_faq.json").read_text(encoding="utf-8"))
+    full += ["## Frequently asked questions", ""] + [f"Q: {f['q']}\nA: {f['a']}\n" for f in home_faqs]
+    (out / "llms-full.txt").write_text("\n".join(full), encoding="utf-8")
 
     # ---- RSS feed (served at /feed/ by nginx)
     items = []

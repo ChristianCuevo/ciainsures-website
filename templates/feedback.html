@@ -20,7 +20,7 @@
 
     <div class="fb__step" data-step="happy" hidden>
       <p class="stars stars--static" aria-label="You rated us 5 stars">★★★★★</p>
-      <h1><span class="fb__hi" hidden></span>Thank you! That means a lot to our team.</h1>
+      <h2><span class="fb__hi" hidden></span>Thank you! That means a lot to our team.</h2>
       <p>Would you share your experience on Google? It takes about a minute and helps other business owners find a broker they can trust.</p>
       <a class="btn btn--gold btn--big" href="{{ review_url }}" target="_blank" rel="noopener" data-track="google">Leave us a Google review</a>
       <form class="fb__note" data-ajax-feedback>
@@ -33,7 +33,7 @@
 
     <div class="fb__step" data-step="unhappy" hidden>
       <p class="stars stars--static fb__given" aria-hidden="true"></p>
-      <h1><span class="fb__hi" hidden></span>Thank you for the honest feedback.</h1>
+      <h2><span class="fb__hi" hidden></span>Thank you for the honest feedback.</h2>
       <p>What would have made this a 5-star experience? Your answer goes only to our team, and we'll follow up to help.</p>
       <form class="fb__note" data-ajax-feedback>
         <label for="fb-note-unhappy">What could we have done better?*
@@ -48,7 +48,7 @@
     </div>
 
     <div class="fb__step" data-step="done" hidden>
-      <h1>Thank you.</h1>
+      <h2>Thank you.</h2>
       <p>Your feedback went straight to our team, and someone will reach out. If you need anything sooner, call us at <a href="tel:+1{{ cfg.phone|replace('-', '') }}">{{ cfg.phone }}</a>.</p>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <a class="pcard" href="{{ q.url }}">
-  <span class="pcard__img">{% if q.image %}<img src="{{ q.image|img }}" alt="" loading="lazy" decoding="async">{% endif %}</span>
+  <span class="pcard__img">{% if q.image %}<img src="{{ q.image|img }}" alt="{{ q.title }}" loading="lazy" decoding="async">{% endif %}</span>
   <span class="pcard__body">
     {% if q.cats %}<span class="chip">{{ q.cats[0].name }}</span>{% endif %}
     <strong>{{ q.title }}</strong>

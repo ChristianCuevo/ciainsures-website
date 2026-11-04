@@ -24,73 +24,211 @@
     "Facebook": "https://www.facebook.com/ciainsures/",
     "YouTube": "https://www.youtube.com/@CentralInsuranceAgency-n6s"
   },
-
   "look": "horizon",
   "looks": [
-    { "id": "horizon", "name": "Horizon", "desc": "Clean and airy: white hero, bright corporate blue",
+    {
+      "id": "horizon",
+      "name": "Horizon",
+      "desc": "Clean and airy: white hero, bright corporate blue",
       "swatch": "linear-gradient(135deg,#ffffff 0 45%,#1a5fd6 45%)",
-      "fonts": ["Manrope:wght@600;700;800", "Inter:wght@400;500;600"] },
-    { "id": "tide", "name": "Tide", "desc": "Bold: full blue hero, big rounded shapes",
-      "swatch": "linear-gradient(135deg,#0a3a8c,#1e88e5)",
-      "fonts": ["Plus+Jakarta+Sans:wght@400;500;600;700;800"] },
-    { "id": "frost", "name": "Frost", "desc": "Soft: light blue gradients, frosted-glass cards",
-      "swatch": "linear-gradient(135deg,#dbe8ff,#ffffff 55%,#2563eb)",
-      "fonts": ["Sora:wght@600;700", "DM+Sans:wght@400;500;600"] },
-    { "id": "meridian", "name": "Meridian", "desc": "Corporate: crisp navy, sharp corners, grid hero",
+      "fonts": [
+        "Manrope:wght@600;700;800",
+        "Inter:wght@400;500;600"
+      ]
+    },
+    {
+      "id": "meridian",
+      "name": "Meridian",
+      "desc": "Corporate: crisp navy, sharp corners, grid hero",
       "swatch": "linear-gradient(135deg,#0a2540 0 55%,#0b5cad 55%)",
-      "fonts": ["Archivo:wght@600;700", "Source+Sans+3:wght@400;600"] }
+      "fonts": [
+        "Archivo:wght@600;700",
+        "Source+Sans+3:wght@400;600"
+      ]
+    },
+    {
+      "id": "evergreen",
+      "name": "Evergreen",
+      "desc": "Calm: deep green and mint, soft rounded shapes",
+      "swatch": "linear-gradient(135deg,#d4f1e3 0 45%,#14795c 45%)",
+      "fonts": [
+        "Outfit:wght@600;700",
+        "Nunito+Sans:wght@400;600;700"
+      ]
+    },
+    {
+      "id": "keystone",
+      "name": "Keystone",
+      "desc": "Premium: charcoal slate with the logo's gold",
+      "swatch": "linear-gradient(135deg,#1b232c 0 55%,#f6be00 55%)",
+      "fonts": [
+        "Montserrat:wght@600;700;800",
+        "Inter:wght@400;500;600"
+      ]
+    }
   ],
   "google_review_url": "",
   "review_threshold": 5,
   "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Central+Insurance+Agency+93+E+Main+St+Smithtown+NY+11787",
-
   "nav": [
-    { "label": "Commercial Insurance", "url": "/commercial-insurance-programs/", "children": [
-      { "label": "General Liability", "url": "/commercial-insurance-programs/general-liability-insurance/" },
-      { "label": "Workers' Compensation", "url": "/commercial-insurance-programs/workers-compensation-insurance/" },
-      { "label": "Professional Liability", "url": "/commercial-insurance-programs/professional-liability-insurance/" },
-      { "label": "Excess / Umbrella", "url": "/commercial-insurance-programs/excess-umbrella-insurance/" },
-      { "label": "Commercial Auto", "url": "/commercial-insurance-programs/commercial-auto-insurance/" },
-      { "label": "Employment Practices Liability", "url": "/commercial-insurance-programs/employment-practices-liability/" },
-      { "label": "Bonding", "url": "/commercial-insurance-programs/bonding-insurance/" }
-    ]},
-    { "label": "Industries", "url": "/industry-insurance-specialties/", "children": [
-      { "label": "Security Guard", "url": "/industry-insurance-specialties/security-guard-insurance/" },
-      { "label": "Alarm & Security Systems", "url": "/industry-insurance-specialties/security-services-insurance/" },
-      { "label": "Fire Suppression", "url": "/industry-insurance-specialties/fire-suppression-insurance/" },
-      { "label": "Janitorial / Cleaning", "url": "/industry-insurance-specialties/janitorial-services-insurance-2/" },
-      { "label": "General Contractor", "url": "/industry-insurance-specialties/contractor-insurance/" },
-      { "label": "Specialty Trade Contractor", "url": "/industry-insurance-specialties/specialty-trade-contractor-insurance/" },
-      { "label": "Home Healthcare Agency", "url": "/industry-insurance-specialties/home-healthcare-agency-insurance/" },
-      { "label": "Private Investigator", "url": "/private-investigator-insurance/" }
-    ]},
-    { "label": "Employee Benefits", "url": "/employee-benefits/", "children": [
-      { "label": "Benefits Overview", "url": "/employee-benefits/" },
-      { "label": "Group Health", "url": "/employee-benefits/group-health-insurance/" },
-      { "label": "Voluntary Benefits", "url": "/employee-benefits/voluntary-benefits/" },
-      { "label": "Union Benefits", "url": "/employee-benefits/union-benefits/" }
-    ]},
-    { "label": "Reviews & Audits", "url": "/request-a-policy-review/", "children": [
-      { "label": "Policy Review & Assessment", "url": "/request-a-policy-review/" },
-      { "label": "Insurance Audit Counseling", "url": "/insurance-audit-counseling/" },
-      { "label": "Personal Insurance", "url": "/personal-insurance/" }
-    ]},
-    { "label": "CIA Insider", "url": "/insurance-news-insights/" },
-    { "label": "About", "url": "/about-central-insurance-agency/" }
+    {
+      "label": "Commercial Insurance",
+      "url": "/commercial-insurance-programs/",
+      "children": [
+        {
+          "label": "General Liability",
+          "url": "/commercial-insurance-programs/general-liability-insurance/"
+        },
+        {
+          "label": "Workers' Compensation",
+          "url": "/commercial-insurance-programs/workers-compensation-insurance/"
+        },
+        {
+          "label": "Professional Liability",
+          "url": "/commercial-insurance-programs/professional-liability-insurance/"
+        },
+        {
+          "label": "Excess / Umbrella",
+          "url": "/commercial-insurance-programs/excess-umbrella-insurance/"
+        },
+        {
+          "label": "Commercial Auto",
+          "url": "/commercial-insurance-programs/commercial-auto-insurance/"
+        },
+        {
+          "label": "Employment Practices Liability",
+          "url": "/commercial-insurance-programs/employment-practices-liability/"
+        },
+        {
+          "label": "Bonding",
+          "url": "/commercial-insurance-programs/bonding-insurance/"
+        }
+      ]
+    },
+    {
+      "label": "Industries",
+      "url": "/industry-insurance-specialties/",
+      "children": [
+        {
+          "label": "Security Guard",
+          "url": "/industry-insurance-specialties/security-guard-insurance/"
+        },
+        {
+          "label": "Alarm & Security Systems",
+          "url": "/industry-insurance-specialties/security-services-insurance/"
+        },
+        {
+          "label": "Fire Suppression",
+          "url": "/industry-insurance-specialties/fire-suppression-insurance/"
+        },
+        {
+          "label": "Janitorial / Cleaning",
+          "url": "/industry-insurance-specialties/janitorial-services-insurance-2/"
+        },
+        {
+          "label": "General Contractor",
+          "url": "/industry-insurance-specialties/contractor-insurance/"
+        },
+        {
+          "label": "Specialty Trade Contractor",
+          "url": "/industry-insurance-specialties/specialty-trade-contractor-insurance/"
+        },
+        {
+          "label": "Home Healthcare Agency",
+          "url": "/industry-insurance-specialties/home-healthcare-agency-insurance/"
+        },
+        {
+          "label": "Private Investigator",
+          "url": "/private-investigator-insurance/"
+        }
+      ]
+    },
+    {
+      "label": "Employee Benefits",
+      "url": "/employee-benefits/",
+      "children": [
+        {
+          "label": "Benefits Overview",
+          "url": "/employee-benefits/"
+        },
+        {
+          "label": "Group Health",
+          "url": "/employee-benefits/group-health-insurance/"
+        },
+        {
+          "label": "Voluntary Benefits",
+          "url": "/employee-benefits/voluntary-benefits/"
+        },
+        {
+          "label": "Union Benefits",
+          "url": "/employee-benefits/union-benefits/"
+        }
+      ]
+    },
+    {
+      "label": "Reviews & Audits",
+      "url": "/request-a-policy-review/",
+      "children": [
+        {
+          "label": "Policy Review & Assessment",
+          "url": "/request-a-policy-review/"
+        },
+        {
+          "label": "Insurance Audit Counseling",
+          "url": "/insurance-audit-counseling/"
+        },
+        {
+          "label": "Personal Insurance",
+          "url": "/personal-insurance/"
+        }
+      ]
+    },
+    {
+      "label": "CIA Insider",
+      "url": "/insurance-news-insights/"
+    },
+    {
+      "label": "About",
+      "url": "/about-central-insurance-agency/"
+    }
   ],
-
   "forms": {
     "/contact/": "contact",
     "/request-a-policy-review/": "policy-review",
     "/insurance-audit-counseling/": "audit-review"
   },
-
   "testimonials": [
-    { "quote": "We wanted a company that would treat us like we were their biggest client. We found that with the entire Central Insurance Agency team. Every time we call, we get a straight answer that is in terminology we can understand. We refer a lot of our customers to CIA and they are pleased with the personal service they receive.",
-      "name": "Michael West", "role": "Chief Operating Officer, Point 2 Point Global Security, Inc.", "place": "Phoenix, MD" },
-    { "quote": "You have consistently gone above and beyond the call of duty, being very attentive and giving special attention to the needs of our company. It is our hope that our business relationship will continue for a very long time.",
-      "name": "Carlos Sutton", "role": "President and CEO, Bel-Air Security, Inc.", "place": "Corona, CA" },
-    { "quote": "My company has been using Central Insurance Agency for over 10 years. Every person we have had the pleasure of working with has been far beyond exceptional. They are very quick to respond and when I have a problem they work with me endlessly until the issue is resolved. I know that with CIA, I am covered and taken care of.",
-      "name": "Jessica Fahmy", "role": "President, Capital Eagle Security, Inc.", "place": "Woodland Hills, CA" }
-  ]
+    {
+      "quote": "We wanted a company that would treat us like we were their biggest client. We found that with the entire Central Insurance Agency team. Every time we call, we get a straight answer that is in terminology we can understand. We refer a lot of our customers to CIA and they are pleased with the personal service they receive.",
+      "name": "Michael West",
+      "role": "Chief Operating Officer, Point 2 Point Global Security, Inc.",
+      "place": "Phoenix, MD"
+    },
+    {
+      "quote": "You have consistently gone above and beyond the call of duty, being very attentive and giving special attention to the needs of our company. It is our hope that our business relationship will continue for a very long time.",
+      "name": "Carlos Sutton",
+      "role": "President and CEO, Bel-Air Security, Inc.",
+      "place": "Corona, CA"
+    },
+    {
+      "quote": "My company has been using Central Insurance Agency for over 10 years. Every person we have had the pleasure of working with has been far beyond exceptional. They are very quick to respond and when I have a problem they work with me endlessly until the issue is resolved. I know that with CIA, I am covered and taken care of.",
+      "name": "Jessica Fahmy",
+      "role": "President, Capital Eagle Security, Inc.",
+      "place": "Woodland Hills, CA"
+    }
+  ],
+  "related_categories": {
+    "/industry-insurance-specialties/security-guard-insurance/": "security-guard",
+    "/industry-insurance-specialties/security-services-insurance/": "alarms",
+    "/industry-insurance-specialties/fire-suppression-insurance/": "fire-suppression",
+    "/industry-insurance-specialties/janitorial-services-insurance-2/": "janitorial-insurance",
+    "/cleaning-company-insurance/": "janitorial-insurance",
+    "/industry-insurance-specialties/contractor-insurance/": "contractors",
+    "/industry-insurance-specialties/specialty-trade-contractor-insurance/": "contractors",
+    "/industry-insurance-specialties/home-healthcare-agency-insurance/": "home-healthcare",
+    "/commercial-insurance-programs/": "insurance-tips",
+    "/request-a-policy-review/": "insurance-tips",
+    "/insurance-audit-counseling/": "insurance-tips",
+    "/employee-benefits/": "insurance-tips"
+  }
 }
