@@ -171,6 +171,34 @@ def insert_after_heading(markup: str, snippet: str) -> str:
     return str(soup)
 
 
+def restack_sidebars(markup: str) -> str:
+    """Old WordPress pages put a long article in one column and a testimonial (+ buttons) in a narrow sidebar.
+    Stack them instead: the article becomes a centered reading column and the sidebar a centered quote card after it."""
+    if "wp-block-columns" not in markup:
+        return markup
+    soup = BeautifulSoup(markup, "html.parser")
+    changed = False
+    for cols in soup.find_all("div", class_="wp-block-columns", recursive=False):
+        cs = cols.find_all("div", class_="wp-block-column", recursive=False)
+        if len(cs) != 2:
+            continue
+        lens = [len(c.get_text(" ", strip=True)) for c in cs]
+        big = 0 if lens[0] >= lens[1] else 1
+        side = cs[1 - big]
+        if lens[big] < 1500 or lens[big] < 3 * max(lens[1 - big], 1) or not side.find(class_="wp-block-cover"):
+            continue
+        aside = soup.new_tag("aside", attrs={"class": "sidequote"})
+        for child in list(side.children):
+            aside.append(child.extract())
+        main_children = [c.extract() for c in list(cs[big].children)]
+        for c in main_children:
+            cols.insert_before(c)
+        cols.insert_before(aside)
+        cols.decompose()
+        changed = True
+    return str(soup) if changed else markup
+
+
 def content_images(markup: str):
     return re.findall(r'<img\b[^>]*\bsrc="(/wp-content/uploads/[^"]+)"', markup)
 
@@ -293,7 +321,7 @@ def main():
 
     # prepare bodies: image alt text everywhere
     for p in list(pages.values()) + posts:
-        p["body"] = fill_alts(p["body"], p["title"])
+        p["body"] = restack_sidebars(fill_alts(p["body"], p["title"]))
 
     speakable = {"@type": "SpeakableSpecification", "cssSelector": ["h1", ".answer"]}
     rel_map = cfg.get("related_categories", {})
